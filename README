@@ -1,0 +1,44 @@
+LAPIN
+
+LAPIN is a dialect of lisp written in Java, which supports both interpreter
+and compiler. Some features (data types, functions, ...) given to LAPIN come
+from MACLISP, for one of the main goal of this project is to run the RABBIT
+compiler on this lisp system.
+
+Author:
+ Kenji Nozawa (hz7k-nzw@asahi-net.or.jp)
+
+== Compiling from source
+
+You will need:
+
+* JDK (http://java.sun.com/javase/) 1.4 or greater
+* Apache Ant (http://ant.apache.org/) 1.6 or greater.
+
+To compile, type:
+
+ ant dist
+
+This will create files for the binary distribution in the 'dist' directory.
+
+== Run
+
+ bin/lapin.sh (for Unix)
+ bin/lapin.bat (for Windows)
+
+in the 'dist' directory activates the REPL.
+
+== Dependencies
+
+* Apache Commons codec 1.3 (http://commons.apache.org/codec/)
+* Apache Jakarta BCEL 5.1 (http://jakarta.apache.org/bcel/)
+* ASM 3.2 (http://asm.ow2.org/)
+
+Dependent jars are downloaded from remote repository in the build process.
+(See 'build.xml' for more information)
+
+== License
+
+GNU General Public License, version 2
+(See LICENSE.txt)
+

@@ -1,0 +1,237 @@
+<!--
+ Copyright (C) 2009 Kenji Nozawa
+ This file is part of LAPIN.
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License along
+ with this program; if not, write to the Free Software Foundation, Inc.,
+ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+-->
+<project name="lapin" default="compile" basedir=".">
+
+  <property file ="build.properties"/>
+
+  <property name ="javac.deprecation"
+	    value="on"/>
+  <property name ="javac.source"
+	    value="1.4"/>
+  <property name ="javac.target"
+	    value="1.4"/>
+  <property name ="bin.home"
+	    value="${basedir}/bin"/>
+  <property name ="build.home"
+	    value="${basedir}/build"/>
+  <property name ="dist.home"
+	    value="${basedir}/dist"/>
+  <property name ="doc.home"
+	    value="${basedir}/doc"/>
+  <property name ="lib.home"
+	    value="${basedir}/lib"/>
+  <property name ="examples.home"
+	    value="${basedir}/examples"/>
+  <property name ="src.home"
+	    value="${basedir}/src"/>
+  <property name ="src.encoding"
+	    value="UTF8"/>
+  <property name="javadoc.locale"
+	    value="en_US"/>
+  <property name="javadoc.link.url"
+	    value="http://java.sun.com/j2se/1.4.2/docs/api"/>
+  <property name="javadoc.maxmemory"
+	    value="400m"/>
+  <property name ="lapin.version"
+	    value="0.1"/>
+  <property name ="lapin.jar.file"
+	    value="lapin-${lapin.version}.jar"/>
+  <property name ="proxy.host"
+	    value=""/>
+  <property name ="proxy.port"
+	    value="80"/>
+  <property name ="repo.url"
+	    value="http://repo1.maven.org/maven2"/>
+
+  <target name="all"
+	  depends="clean,compile"/>
+
+  <target name="init"
+	  depends="init-prepare,get-jar,init-classpath"/>
+
+  <target name="init-prepare">
+    <mkdir dir="${lib.home}"/>
+    <condition property="lib.exist">
+      <and>
+	<available file="${lib.home}/commons-codec-1.3.jar"/>
+	<available file="${lib.home}/bcel-5.1.jar"/>
+	<available file="${lib.home}/asm-3.2.jar"/>
+      </and>
+    </condition>
+    <!--echo message="lib.exist=${lib.exist}"/-->
+  </target>
+
+  <target name="get-jar"
+	  depends="init-prepare" unless="lib.exist">
+    <setproxy proxyhost="${proxy.host}" proxyport="${proxy.port}"/>
+    <get src="${repo.url}/commons-codec/commons-codec/1.3/commons-codec-1.3.jar"
+	 dest="${lib.home}/commons-codec-1.3.jar"
+	 usetimestamp="true"
+	 verbose="false"
+	 ignoreerrors="false" />
+    <get src="${repo.url}/bcel/bcel/5.1/bcel-5.1.jar"
+	 dest="${lib.home}/bcel-5.1.jar"
+	 usetimestamp="true"
+	 verbose="false"
+	 ignoreerrors="false" />
+    <get src="${repo.url}/asm/asm/3.2/asm-3.2.jar"
+	 dest="${lib.home}/asm-3.2.jar"
+	 usetimestamp="true"
+	 verbose="false"
+	 ignoreerrors="false" />
+  </target>
+
+  <target name="init-classpath" depends="get-jar">
+    <path id="compile.classpath">
+      <pathelement location="${build.home}/classes"/>
+      <fileset dir="${lib.home}">
+	<include name="**/*.jar"/>
+      </fileset>
+    </path>
+  </target>
+
+  <target name="compile"
+	  depends="compile-prepare,compile-java,compile-lisp"/>
+
+  <target name="compile-prepare" depends="init">
+    <mkdir dir="${build.home}"/>
+    <mkdir dir="${build.home}/classes"/>
+    <copy todir="${build.home}/classes">
+      <fileset dir="${src.home}" includes="**/*.properties"/>
+      <fileset dir="${src.home}" includes="**/*.lisp"/>
+    </copy>
+    <condition property="lisp.uptodate">
+      <and>
+	<uptodate srcfile="${build.home}/classes/init.lisp"
+		  targetfile="${build.home}/classes/init.fasl"/>
+	<uptodate srcfile="${build.home}/classes/init_compiler.lisp"
+		  targetfile="${build.home}/classes/init_compiler.fasl"/>
+      </and>
+    </condition>
+    <!--echo message="lisp.uptodate=${lisp.uptodate}"/-->
+  </target>
+
+  <target name="compile-java" depends="compile-prepare">
+    <javac srcdir="${src.home}"
+	   destdir="${build.home}/classes"
+	   encoding="${src.encoding}"
+	   source="${javac.source}"
+	   target="${javac.target}"
+	   deprecation="${javac.deprecation}">
+      <include name="lapin/**" />
+      <classpath refid="compile.classpath"/>
+    </javac>
+  </target>
+
+  <target name="compile-lisp"
+	  depends="compile-java" unless="lisp.uptodate">
+    <java classname="lapin.tool.Main"
+	  fork="true">
+      <classpath refid="compile.classpath"/>
+      <!--jvmarg value="-Dlapin.init.resource.name=/init.lisp"/-->
+      <arg value="compile_init_files.lisp"/>
+    </java>
+  </target>
+
+  <target name="dist"
+	  depends="dist-prepare,jar,javadoc"/>
+
+  <target name="dist-prepare" depends="init">
+    <mkdir dir="${dist.home}"/>
+    <mkdir dir="${dist.home}/bin"/>
+    <mkdir dir="${dist.home}/classes"/>
+    <mkdir dir="${dist.home}/doc"/>
+    <mkdir dir="${dist.home}/doc/javadoc"/>
+    <mkdir dir="${dist.home}/lib"/>
+    <mkdir dir="${dist.home}/examples"/>
+    <copy todir="${dist.home}" file="README"/>
+    <copy todir="${dist.home}" file="LICENSE"/>
+    <copy todir="${dist.home}/bin">
+      <fileset dir="${bin.home}"/>
+    </copy>
+    <chmod perm="744">
+      <fileset dir="${dist.home}/bin">
+	<include name="**.sh"/>
+      </fileset>
+    </chmod>
+    <copy todir="${dist.home}/doc">
+      <fileset dir="${doc.home}"/>
+    </copy>
+    <copy todir="${dist.home}/lib">
+      <fileset dir="${lib.home}"/>
+    </copy>
+    <copy todir="${dist.home}/examples">
+      <fileset dir="${examples.home}"/>
+    </copy>
+    <condition property="javadoc.uptodate">
+      <uptodate targetfile="${dist.home}/doc/javadoc/index.html">
+	<srcfiles dir="${src.home}" includes="**/*.java"/>
+      </uptodate>
+    </condition>
+    <!--echo message="javadoc.uptodate=${javadoc.uptodate}"/-->
+  </target>
+
+  <target name="jar" depends="dist-prepare,compile">
+    <jar jarfile="${dist.home}/lib/${lapin.jar.file}">
+      <fileset dir="${build.home}/classes" includes="**/*.class"/>
+      <fileset dir="${build.home}/classes" includes="**/*.properties"/>
+      <fileset dir="${build.home}/classes" includes="**/*.lisp"/>
+      <fileset dir="${build.home}/classes" includes="**/*.fasl"/>
+    </jar>
+  </target>
+
+  <target name="javadoc"
+	  depends="dist-prepare" unless="javadoc.uptodate">
+    <javadoc sourcepath="${src.home}"
+	     destdir="${dist.home}/doc/javadoc"
+	     packagenames="lapin.*"
+	     encoding="${src.encoding}"
+	     locale="${javadoc.locale}"
+	     author="true"
+	     version="true"
+	     maxmemory="${javadoc.maxmemory}"
+	     Windowtitle="LAPIN API"
+	     Doctitle="LAPIN API Specification">
+      <classpath refid="compile.classpath"/>
+      <link href="${javadoc.link.url}"/>
+    </javadoc>
+  </target>
+
+  <target name="clean">
+    <delete dir="${lib.home}"/>
+    <delete dir="${build.home}"/>
+    <delete dir="${dist.home}"/>
+  </target>
+
+  <target name="clean-backup">
+    <delete>
+      <fileset dir="${basedir}" includes="**/*~" defaultexcludes="no" />
+    </delete>
+  </target>
+
+  <target name="clean-fasl">
+    <delete>
+      <fileset dir="${basedir}" includes="**/*fasl" defaultexcludes="no" />
+    </delete>
+  </target>
+
+  <target name="clean-all"
+	  depends="clean,clean-backup,clean-fasl"/>
+
+</project>
