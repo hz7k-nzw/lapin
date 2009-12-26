@@ -83,41 +83,41 @@ public final class Data {
      * predicates for data types
      */
 
-    ///**
-    // * Returns the symbol which specifies the type of o. 
-    // */
-    //static public Symbol typep(Object o) {
-    //    if (isSymbol(o)) {
-    //        return Symbols.SYMBOL;
-    //    }
-    //    else if (isPair(o)) {
-    //        return Symbols.LIST;
-    //    }
-    //    else if (isFixnum(o)) {
-    //        return Symbols.FIXNUM;
-    //    }
-    //    else if (isFlonum(o)) {
-    //        return Symbols.FLONUM;
-    //    }
-    //    else if (isBignum(o)) {
-    //        return Symbols.BIGNUM;
-    //    }
-    //    else if (isCharacter(o)) {
-    //        return Symbols.CHARACTER;
-    //    }
-    //    else if (isString(o)) {
-    //        return Symbols.STRING;
-    //    }
-    //    else if (isArray(o)) {
-    //        return Symbols.ARRAY;
-    //    }
-    //    else if (isHunk(o)) {
-    //        return Symbols.HUNK;
-    //    }
-    //    else {
-    //        return Symbols.RANDOM;
-    //    }
-    //}
+    /**
+     * Returns the symbol which specifies the type of o. 
+     */
+    static public Symbol typep(Object o) {
+        if (isSymbol(o)) {
+            return Symbols.SYMBOL;
+        }
+        else if (isPair(o)) {
+            return Symbols.LIST;
+        }
+        else if (isFixnum(o)) {
+            return Symbols.FIXNUM;
+        }
+        else if (isFlonum(o)) {
+            return Symbols.FLONUM;
+        }
+        else if (isBignum(o)) {
+            return Symbols.BIGNUM;
+        }
+        else if (isCharacter(o)) {
+            return Symbols.CHARACTER;
+        }
+        else if (isString(o)) {
+            return Symbols.STRING;
+        }
+        else if (isArray(o)) {
+            return Symbols.ARRAY;
+        }
+        else if (isHunk(o)) {
+            return Symbols.HUNK;
+        }
+        else {
+            return Symbols.RANDOM;
+        }
+    }
     /**
      * Returns true if its argument is NIL (the empty list);
      * otherwise returns false.

@@ -101,8 +101,8 @@ public final class LispSubrs {
     static public final Subr MAPLIST = new MAPLIST();
     static public final Subr MAPC = new MAPC();
     static public final Subr MAPL = new MAPL();
-    //static public final Subr TYPEP
-    //    = SystemSubr.toSubr1("TYPEP",Data.class,"typep");
+    static public final Subr TYPEP
+        = SystemSubr.toSubr1("TYPEP",Data.class,"typep");
     static public final Subr NOT
         = SystemSubr.toSubr1("NOT",Data.class,"isNot");
     static public final Subr NULL
