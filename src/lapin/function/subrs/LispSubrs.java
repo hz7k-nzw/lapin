@@ -2745,7 +2745,16 @@ public final class LispSubrs {
         public Object call1(Object r0, Env env) {
             StringBuffer buf = new StringBuffer();
             for (Object l = r0; !Lists.isEnd(l); l = Lists.cdr(l)) {
-                buf.append((char) Data.fixnum(Lists.car(l)).intValue());
+                Object obj = Lists.car(l);
+                if (Data.isSymbol(obj)) {
+                    buf.append(Data.symbol(obj).pname());
+                }
+                else if (Data.isCharacter(obj)) {
+                    buf.append(Data.character(obj).charValue());
+                }
+                else {
+                    buf.append((char) Data.fixnum(obj).intValue());
+                }
             }
             Object pkg = Package.get(env);
             return env.lisp().getObarray().intern(pkg, buf.toString()).nth(0);
