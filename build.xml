@@ -50,8 +50,8 @@
 	    value="400m"/>
   <property name ="lapin.version"
 	    value="0.1"/>
-  <property name ="lapin.jar.file"
-	    value="lapin-${lapin.version}.jar"/>
+  <property name ="lapin.final.name"
+	    value="lapin-${lapin.version}"/>
   <property name ="proxy.host"
 	    value=""/>
   <property name ="proxy.port"
@@ -188,7 +188,7 @@
   </target>
 
   <target name="jar" depends="dist-prepare,compile">
-    <jar jarfile="${dist.home}/lib/${lapin.jar.file}">
+    <jar jarfile="${dist.home}/lib/${lapin.final.name}.jar">
       <fileset dir="${build.home}/classes" includes="**/*.class"/>
       <fileset dir="${build.home}/classes" includes="**/*.properties"/>
       <fileset dir="${build.home}/classes" includes="**/*.lisp"/>
@@ -213,10 +213,52 @@
     </javadoc>
   </target>
 
+  <target name="dist-src"
+	  depends="tgz-src,zip-src"/>
+
+  <target name="tgz-src">
+    <tar longfile="gnu" compression="gzip"
+	 tarfile="${basedir}/${lapin.final.name}-src.tar.gz">
+      <tarfileset dir="${basedir}"
+		  mode="744" prefix="${lapin.final.name}-src">
+	<include name="bin/*.sh"/>
+      </tarfileset>
+      <tarfileset dir="${basedir}"
+		  prefix="${lapin.final.name}-src">
+	<include name="bin/**"/>
+	<include name="doc/**"/>
+	<include name="src/**"/>
+	<include name="examples/**"/>
+	<include name="README"/>
+	<include name="LICENSE"/>
+	<include name="build.xml"/>
+	<include name="compile_init_files.lisp"/>
+	<exclude name="bin/*.sh"/>
+      </tarfileset>
+    </tar>
+  </target>
+
+  <target name="zip-src">
+    <zip zipfile="${basedir}/${lapin.final.name}-src.zip">
+      <zipfileset dir="${basedir}" prefix="${lapin.final.name}-src">
+	<include name="bin/**"/>
+	<include name="doc/**"/>
+	<include name="src/**"/>
+	<include name="examples/**"/>
+	<include name="README"/>
+	<include name="LICENSE"/>
+	<include name="build.xml"/>
+	<include name="compile_init_files.lisp"/>
+      </zipfileset>
+    </zip>
+  </target>
+
   <target name="clean">
     <delete dir="${lib.home}"/>
     <delete dir="${build.home}"/>
     <delete dir="${dist.home}"/>
+    <delete file="${lapin.final.name}-src.tar.gz"/>
+    <delete file="${lapin.final.name}-src.zip"/>
   </target>
 
   <target name="clean-backup">
