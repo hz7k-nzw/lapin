@@ -49,7 +49,7 @@
   <property name="javadoc.maxmemory"
 	    value="400m"/>
   <property name ="lapin.version"
-	    value="0.1"/>
+	    value="develop"/>
   <property name ="lapin.final.name"
 	    value="lapin-${lapin.version}"/>
   <property name ="proxy.host"
@@ -232,6 +232,7 @@
 	<include name="README"/>
 	<include name="LICENSE"/>
 	<include name="build.xml"/>
+	<include name="build.properties"/>
 	<include name="compile_init_files.lisp"/>
 	<exclude name="bin/*.sh"/>
       </tarfileset>
@@ -248,6 +249,7 @@
 	<include name="README"/>
 	<include name="LICENSE"/>
 	<include name="build.xml"/>
+	<include name="build.properties"/>
 	<include name="compile_init_files.lisp"/>
       </zipfileset>
     </zip>
