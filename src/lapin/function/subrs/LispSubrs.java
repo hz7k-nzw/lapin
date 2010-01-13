@@ -279,8 +279,8 @@ public final class LispSubrs {
          = SystemSubr.toSubr2("ASSOC",Lists.class,"assoc", false);
     static public final Subr ASSQ
         = SystemSubr.toSubr2("ASSQ",Lists.class,"assq", false);
-    static public final Subr PAIRLIS
-        = SystemSubr.toSubr3("PAIRLIS",Lists.class,"pairlis");
+    //static public final Subr PAIRLIS
+    //    = SystemSubr.toSubr3("PAIRLIS",Lists.class,"pairlis");
     static public final Subr SYMBOL_PACKAGE = new SYMBOL_PACKAGE();
     static public final Subr SYMBOL_NAME = new SYMBOL_NAME();
     static public final Subr MAKE_PACKAGE = new MAKE_PACKAGE();

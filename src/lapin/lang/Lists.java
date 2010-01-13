@@ -650,23 +650,23 @@ public final class Lists {
                 l = cdr(l);
         }
     }
-    static public List pairlis(Object lst1, Object lst2, Object lst3) {
-        List i = Data.list(lst1);
-        List j = Data.list(lst2);
-        List l = Data.list(lst3);
-        while (true) {
-            if (i.isEnd() && j.isEnd())
-                return l;
-            else if (i.isEnd() || j.isEnd())
-                throw new UndefinedOperationException
-                    ("wrong number of arguments", Symbols.NIL);
-            else {
-                l = cons(cons(i.car(), j.car()), l);
-                i = Data.list(i.cdr());
-                j = Data.list(j.cdr());
-            }
-        }
-    }
+    //static public List pairlis(Object lst1, Object lst2, Object lst3) {
+    //    List i = Data.list(lst1);
+    //    List j = Data.list(lst2);
+    //    List l = Data.list(lst3);
+    //    while (true) {
+    //        if (i.isEnd() && j.isEnd())
+    //            return l;
+    //        else if (i.isEnd() || j.isEnd())
+    //            throw new UndefinedOperationException
+    //                ("wrong number of arguments", Symbols.NIL);
+    //        else {
+    //            l = cons(cons(i.car(), j.car()), l);
+    //            i = Data.list(i.cdr());
+    //            j = Data.list(j.cdr());
+    //        }
+    //    }
+    //}
 
     /*
      * java-array operations
