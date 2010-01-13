@@ -176,9 +176,9 @@ public final class Symbols {
     /** Interned symbol whose pname is "MACRO". */
     static public final Symbol MACRO
         = Package.LISP.intern("MACRO");
-    /** Interned symbol whose pname is "MATH-CONST". */
-    static public final Symbol MATH_CONST
-        = Package.LISP.intern("MATH-CONST");
+    ///** Interned symbol whose pname is "MATH-CONST". */
+    //static public final Symbol MATH_CONST
+    //    = Package.LISP.intern("MATH-CONST");
     /** Interned symbol whose pname is "MULTIPLE-VALUE-BIND". */
     static public final Symbol MULTIPLE_VALUE_BIND
         = Package.LISP.intern("MULTIPLE-VALUE-BIND");

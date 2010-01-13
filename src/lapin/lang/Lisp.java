@@ -140,10 +140,8 @@ public final class Lisp {
         setProp(Symbols.OBARRAY, Symbols.ARRAY, obarray);
         defvar(Symbols.READTABLE, readtbl);
         setProp(Symbols.READTABLE, Symbols.ARRAY, readtbl);
-        defvar(Symbols.PI, Numbers.PI);
-        setProp(Symbols.PI, Symbols.MATH_CONST, Numbers.PI);
-        defvar(Symbols.EXP, Numbers.E);
-        setProp(Symbols.EXP, Symbols.MATH_CONST, Numbers.E);
+        defconst(Symbols.PI, Numbers.PI);
+        //defconst(Symbols.EXP, Numbers.E);
         defvar(Symbols.SYSTEM_IN, Lisp.SYS_IN);
         defvar(Symbols.SYSTEM_OUT, Lisp.SYS_OUT);
         defvar(Symbols.SYSTEM_ERR, Lisp.SYS_ERR);
@@ -162,10 +160,10 @@ public final class Lisp {
         defvar(Symbols.PRINT_ESCAPE, Symbols.T);
         defvar(Symbols.PRINT_EXCEPTION_VERBOSE, Symbols.NIL);
         defvar(Symbols.PRINT_BACKTRACE_VERBOSE, Symbols.NIL);
-        defvar(Symbols.LAMBDA_LIST_KEYWORDS,
-               Lists.copyList(Symbols.LAMBDA_LIST_KEYWORD_LIST));
-        defvar(Symbols.FUNCTION_INDICATORS,
-               Lists.copyList(Symbols.FUNCTION_INDICATOR_LIST));
+        defconst(Symbols.LAMBDA_LIST_KEYWORDS,
+                 Lists.copyList(Symbols.LAMBDA_LIST_KEYWORD_LIST));
+        defconst(Symbols.FUNCTION_INDICATORS,
+                 Lists.copyList(Symbols.FUNCTION_INDICATOR_LIST));
         defvar(Symbols.ALARMCLOCK, Symbols.NIL);
         defvar(Symbols.COMPILE_INPUT_DIR);
         defvar(Symbols.COMPILE_OUTPUT_DIR);
