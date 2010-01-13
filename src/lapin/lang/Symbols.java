@@ -415,9 +415,9 @@ public final class Symbols {
     /** Keyword whose pname is "CREATE". */
     static public final Symbol KW_CREATE
         = Package.KEYWORD.intern("CREATE");
-    /** Keyword whose pname is "DEFINITION". */
-    static public final Symbol KW_DEFINITION
-        = Package.KEYWORD.intern("DEFINITION");
+    ///** Keyword whose pname is "DEFINITION". */
+    //static public final Symbol KW_DEFINITION
+    //    = Package.KEYWORD.intern("DEFINITION");
     /** Keyword whose pname is "DIRECTION". */
     static public final Symbol KW_DIRECTION
         = Package.KEYWORD.intern("DIRECTION");

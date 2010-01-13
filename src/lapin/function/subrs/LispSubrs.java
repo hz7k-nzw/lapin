@@ -2639,24 +2639,23 @@ public final class LispSubrs {
 
     static class COMPILE extends SystemSubr.SUBR {
         static final Object keys
-            = Lists.list(Symbols.KW_DEFINITION,
-                         Symbols.KW_DRYRUN,
+            = Lists.list(Symbols.KW_DRYRUN,
                          Symbols.KW_PRINT,
                          Symbols.KW_OPTIMIZE);
-        COMPILE() { super("COMPILE",1,0,false,keys,false); }
+        COMPILE() { super("COMPILE",1,1,false,keys,false); }
         public Object doCall(Env env) {
             Object r0 = super.required(0,env);
+            Object o0 = super.optional(0,env);
             Object k0 = super.keyword(0,env);
             Object k1 = super.keyword(1,env);
-            Object k2 = super.keyword(2,env);
-            Object k3 = super.isKeyword(3,env)
-                ? super.keyword(3, env)
+            Object k2 = super.isKeyword(2,env)
+                ? super.keyword(2, env)
                 : Symbols.T;
             Symbol sym = Data.symbol(r0);
-            Expr expr = (k0 == Symbols.NIL)
+            Expr expr = (o0 == Symbols.NIL)
                 ? Data.expr(env.lisp().getProp(sym, Symbols.EXPR))
-                : Data.expr(k0);
-            return Compiler.compile(sym, expr, k1, k2, k3, env);
+                : Data.expr(o0);
+            return Compiler.compile(sym, expr, k0, k1, k2, env);
         }
     }
     static class COMPILE_FILE extends SystemSubr.SUBR {
