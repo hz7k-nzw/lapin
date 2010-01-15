@@ -282,23 +282,40 @@ public final class Lisp {
     public void set(Symbol sym, Object val) {
         env.set(sym, val);
     }
-    public Object getPlist(Prop prop) {
-        return penv.getPlist(prop);
+    public Object getPlist(Object obj) {
+        Object disembodiedPlst = toDisembodiedPlist(obj, false);
+        return disembodiedPlst == null ? Symbols.NIL
+            : Lists.cdr(disembodiedPlst);
     }
-    public void setPlist(Prop prop, Object plst) {
-        penv.setPlist(prop, plst);
+    public void setPlist(Object obj, Object plst) {
+        Object disembodiedPlst = toDisembodiedPlist(obj, true);
+        Lists.rplacd(disembodiedPlst, plst);
     }
-    public Object getProp(Prop prop, Object indicator) {
-        return getProp(prop, indicator, Symbols.NIL);
+    public Object getProp(Object obj, Object indicator) {
+        return getProp(obj, indicator, Symbols.NIL);
     }
-    public Object getProp(Prop prop, Object indicator, Object defaultVal) {
-        return penv.getProp(prop, indicator, defaultVal);
+    public Object getProp(Object obj, Object indicator, Object defaultVal) {
+        Object disembodiedPlst = toDisembodiedPlist(obj, false);
+        return disembodiedPlst == null ? defaultVal
+            : Plists.get(disembodiedPlst, indicator, defaultVal);
     }
-    public Object setProp(Prop prop, Object indicator, Object val) {
-        return penv.setProp(prop, indicator, val);
+    public Object setProp(Object obj, Object indicator, Object val) {
+        Object disembodiedPlst = toDisembodiedPlist(obj, true);
+        return Plists.set(disembodiedPlst, indicator, val);
     }
-    public Object remProp(Prop prop, Object indicator) {
-        return penv.remProp(prop, indicator);
+    public Object remProp(Object obj, Object indicator) {
+        Object disembodiedPlst = toDisembodiedPlist(obj, false);
+        return disembodiedPlst == null ? Symbols.NIL
+            : Plists.rem(disembodiedPlst, indicator);
+    }
+    public Object getSubplist(Object obj, Object indlst) {
+        Object disembodiedPlst = toDisembodiedPlist(obj, false);
+        return disembodiedPlst == null ? Symbols.NIL
+            : Plists.getl(disembodiedPlst, indlst);
+    }
+    private Object toDisembodiedPlist(Object obj, boolean create) {
+        return Data.isProp(obj)
+            ? penv.getPlist(Data.prop(obj), create) : obj;
     }
     public void defun(Symbol sym, Symbol type, Function fun) {
         remProp(sym, type);
@@ -319,8 +336,12 @@ public final class Lisp {
     public boolean isConstant(Symbol sym) {
         return getProp(sym, Symbols.CONSTANT) == Symbols.T;
     }
+    //public Object functions(Symbol sym) {
+    //    return getSubplist(sym, Symbols.FUNCTION_INDICATOR_LIST);
+    //}
     public Object functions(Symbol sym) {
-        return Plists.getl(getPlist(sym),
-                           Symbols.FUNCTION_INDICATOR_LIST);
+        Object disembodiedPlst = penv.getPlist(sym, false);
+        return disembodiedPlst == null ? Symbols.NIL
+            : Plists.getl(disembodiedPlst, Symbols.FUNCTION_INDICATOR_LIST);
     }
 }

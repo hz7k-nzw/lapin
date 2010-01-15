@@ -41,7 +41,6 @@ import lapin.lang.ControlException;
 import lapin.lang.Data;
 import lapin.lang.Env;
 import lapin.lang.Lists;
-import lapin.lang.Plists;
 import lapin.lang.ProgramException;
 import lapin.lang.SimpleException;
 import lapin.lang.Symbol;

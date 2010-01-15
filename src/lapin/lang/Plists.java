@@ -35,23 +35,24 @@ public final class Plists {
     }
     static public Object set(Object plst, Object indicator, Object val) {
         Object curr = memq(indicator, plst);
-        Object ret;
         if (curr == Symbols.NIL) {
-            ret = Lists.list2(indicator, val, plst);
+            // insert
+            Lists.rplacd(plst, Lists.list2(indicator, val, Lists.cdr(plst)));
         } else {
+            // update
             Lists.rplaca(Lists.cdr(curr), val);
-            ret = plst;
         }
-        return ret;
+        return val;
     }
-    static public Object rem(Object plst, Object indicator, Object defaultVal) {
-        Object prev = Symbols.NIL;
-        Object curr = plst;
-        Object next = Lists.cddr(plst);
+    static public Object rem(Object plst, Object indicator) {
+        // disembodied plist: (head ind1 val1 ind2 val2 ... indN valN)
+        Object prev = null;
+        Object curr = Lists.cdr(plst);
+        Object next = Lists.cddr(curr);
         Object ret;
         while (true) {
             if (Lists.isEnd(curr)) {
-                ret = defaultVal;
+                ret = Symbols.NIL;
                 break;
             }
             else if (Lists.isEnd(Lists.cdr(curr))) {
@@ -59,13 +60,13 @@ public final class Plists {
                     ("illegal end of plist", Symbols.NIL);
             }
             else if (Lists.car(curr) == indicator) {
-                if (prev == Symbols.NIL) {
-                    ret = next;
+                if (prev == null) {
+                    Lists.rplacd(plst, next);
                 }
                 else {
                     Lists.rplacd(Lists.cdr(prev), next);
-                    ret = plst;
                 }
+                ret = Symbols.T;
                 break;
             }
             else {
@@ -77,7 +78,8 @@ public final class Plists {
         return ret;
     }
     static public Object getl(Object plst, Object indlst) {
-        Object l = plst;
+        // disembodied plist: (head ind1 val1 ind2 val2 ... indN valN)
+        Object l = Lists.cdr(plst);
         while (true) {
             if (Lists.isEnd(l)) {
                 return Symbols.NIL;
@@ -94,8 +96,9 @@ public final class Plists {
             }
         }
     }
-    static public Object memq(Object indicator, Object plst) {
-        Object l = plst;
+    static private Object memq(Object indicator, Object plst) {
+        // disembodied plist: (head ind1 val1 ind2 val2 ... indN valN)
+        Object l = Lists.cdr(plst);
         while (true) {
             if (Lists.isEnd(l)) {
                 return Symbols.NIL;

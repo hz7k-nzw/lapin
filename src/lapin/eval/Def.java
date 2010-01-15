@@ -26,7 +26,6 @@ import lapin.lang.ProgramException;
 import lapin.lang.Lists;
 import lapin.lang.Obarray;
 import lapin.lang.Package;
-import lapin.lang.Plists;
 import lapin.lang.Symbol;
 import lapin.lang.Symbols;
 import lapin.lang.Values;

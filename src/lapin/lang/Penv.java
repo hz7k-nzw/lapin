@@ -29,65 +29,24 @@ import java.util.Set;
  */
 public class Penv {
     // uninterned symbol: for private use only
-    static private final Symbol NOT_FOUND = Symbol.gensym("_NOT-FOUND_");
+    static private final Symbol HEAD = Symbol.gensym("_PLIST-HEAD_");
 
     private final HashMap plistMap = new HashMap();
 
-    public /*synchronized*/ Object getPlist(Prop prop) {
-        if (prop == null)
-            throw new NullPointerException("prop is null");
+    public /*synchronized*/ Object getPlist(Prop prop, boolean create) {
         Object plst = plistMap.get(prop);
-        if (plst == null)
-            return Symbols.NIL;
-        else
-            return plst;
-    }
-    public /*synchronized*/ void setPlist(Prop prop, Object plst) {
-        if (prop == null)
-            throw new NullPointerException("prop is null");
-        if (plst == null)
-            throw new NullPointerException("plist is null");
-        plistMap.put(prop, Data.list(plst));
-    }
-    public /*synchronized*/ Object getProp
-        (Prop prop, Object indicator, Object defaultVal) {
-        Object plst = getPlist(prop);
-        return Plists.get(plst, indicator, defaultVal);
-    }
-    public /*synchronized*/ Object setProp
-        (Prop prop, Object indicator, Object val) {
-        Object plst = getPlist(prop);
-        Object plst2 = Plists.set(plst, indicator, val);
-        if (plst != plst2) {
-            // head of the plist was changed
-            setPlist(prop, plst2);
+        if (plst == null && create) {
+            // create & put new disembodied plist for prop
+            plst = Lists.list(HEAD);
+            plistMap.put(prop, plst);
         }
-        return val;
-    }
-    public /*synchronized*/ Object remProp
-        (Prop prop, Object indicator) {
-        Object plst = getPlist(prop);
-        Object plst2 = Plists.rem(plst, indicator, NOT_FOUND);
-        Object ret;
-        if (plst2 == NOT_FOUND) {
-            // plist was not modified
-            ret = Symbols.NIL;
-        }
-        else {
-            // plist was modified
-            if (plst != plst2) {
-                // head of the plist was changed
-                setPlist(prop, plst2);
-            }
-            ret = Symbols.T;
-        }
-        return ret;
+        return plst;
     }
     public void dump(Object stream, Env env) {
         Set keySet = plistMap.keySet();
         for (Iterator i = keySet.iterator(); i.hasNext();) {
             Object key = i.next();
-            Object val = plistMap.get(key);
+            Object val = Lists.cdr(plistMap.get(key));
             Printer.format("~S = ~S~%", Lists.list(key, val), stream, env);
         }
         Printer.terpri(stream, env);

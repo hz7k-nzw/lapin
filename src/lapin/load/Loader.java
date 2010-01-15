@@ -25,10 +25,9 @@ import lapin.io.Reader;
 import lapin.io.StreamException;
 import lapin.lang.Data;
 import lapin.lang.Env;
+import lapin.lang.Lisp;
 import lapin.lang.LispException;
 import lapin.lang.Lists;
-import lapin.lang.Obarray;
-import lapin.lang.Penv;
 import lapin.lang.Package;
 import lapin.lang.Prop;
 import lapin.lang.Symbol;
@@ -297,7 +296,7 @@ public final class Loader {
     }
     static private Object _impSymbols(Class clazz, Object export, Env env)
         throws IllegalAccessException {
-        Obarray oa = env.lisp().getObarray();
+        Lisp lisp = env.lisp();
         Field[] fields = clazz.getFields();
         Class symClass = Symbol.class;
         for (int i = 0; i < fields.length; i++) {
@@ -308,9 +307,9 @@ public final class Loader {
             if (!symClass.isAssignableFrom(f.getType()))
                 continue;
             Symbol sym = Data.symbol(f.get(null));
-            oa.imp(sym.pkg(), sym);
+            lisp.getObarray().imp(sym.pkg(), sym);
             if (!Data.isNot(export))
-                oa.exp(sym.pkg(), sym);
+                lisp.getObarray().exp(sym.pkg(), sym);
         }
         return Symbols.T;
     }
@@ -346,8 +345,7 @@ public final class Loader {
                                     Symbol indicator, Object export,
                                     Env env)
         throws IllegalAccessException {
-        Obarray oa = env.lisp().getObarray();
-        Penv penv = env.lisp().getPenv();
+        Lisp lisp = env.lisp();
         Field[] fields = clazz.getFields();
         Class subrClass = Subr.class;
         for (int i = 0; i < fields.length; i++) {
@@ -359,18 +357,18 @@ public final class Loader {
                 continue;
             Subr subr = Data.subr(f.get(null));
             Symbol sym = Data.symbol
-                (oa.intern(pkgname, subr.name()).nth(0));
+                (lisp.getObarray().intern(pkgname, subr.name()).nth(0));
             if (!Data.isNot(export))
-                oa.exp(pkgname, sym);
-            Object old = penv.getProp(sym, indicator, Symbols.NIL);
+                lisp.getObarray().exp(pkgname, sym);
+            Object old = lisp.getProp(sym, indicator, Symbols.NIL);
             if (!Data.isNot(old))
                 throw new LispException
                     ("conflict detected while importing subrs "+
                      "defined in ~S: name=~S indicator=~S",
                      Lists.list(clazz, sym, indicator));
-            penv.setProp(sym, indicator, subr);
+            lisp.setProp(sym, indicator, subr);
             if (subr instanceof Prop)
-                penv.setProp((Prop) subr, SysSymbols.SUBR_FIELD, f);
+                lisp.setProp((Prop) subr, SysSymbols.SUBR_FIELD, f);
         }
         return Symbols.T;
     }
@@ -394,6 +392,7 @@ public final class Loader {
      * @throws LoadException
      */
     static public Object loadSubrs(Object args, Env env) {
+        Lisp lisp = env.lisp();
         for (Object l = args; !Lists.isEnd(l); l = Lists.cdr(l)) {
             Object arg = Lists.car(l);
             if (Lists.length(arg) != 3) {
@@ -412,7 +411,7 @@ public final class Loader {
                 byte[] bytes = toBytes(Data.string(classinfo));
                 subr = toSubr(name, classname, bytes, env);
             }
-            env.lisp().defun(name, Symbols.SUBR, subr);
+            lisp.defun(name, Symbols.SUBR, subr);
         }
         return Symbols.T;
     }

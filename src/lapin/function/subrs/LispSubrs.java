@@ -46,7 +46,6 @@ import lapin.lang.Lists;
 import lapin.lang.Numbers;
 import lapin.lang.Obarray;
 import lapin.lang.Package;
-import lapin.lang.Plists;
 import lapin.lang.Symbol;
 import lapin.lang.Symbols;
 import lapin.lang.Values;
@@ -1433,7 +1432,7 @@ public final class LispSubrs {
     static class GET extends SystemSubr.SUBR2 {
         GET() { super("GET"); }
         public Object call2(Object r0, Object r1, Env env) {
-            return env.lisp().getProp(Data.prop(r0), r1);
+            return env.lisp().getProp(r0, r1);
         }
         public boolean canProduceValues(int nargs) {
             return false;
@@ -1442,8 +1441,7 @@ public final class LispSubrs {
     static class GETL extends SystemSubr.SUBR2 {
         GETL() { super("GETL"); }
         public Object call2(Object r0, Object r1, Env env) {
-            Object plist = env.lisp().getPlist(Data.prop(r0));
-            return Plists.getl(plist, r1);
+            return env.lisp().getSubplist(r0, r1);
         }
         public boolean canProduceValues(int nargs) {
             return false;
@@ -1452,7 +1450,7 @@ public final class LispSubrs {
     static class PUTPROP extends SystemSubr.SUBR3 {
         PUTPROP() { super("PUTPROP"); }
         public Object call3(Object r0, Object r1, Object r2, Env env) {
-            return env.lisp().setProp(Data.prop(r0), r2, r1);
+            return env.lisp().setProp(r0, r2, r1);
         }
         public boolean canProduceValues(int nargs) {
             return false;
@@ -1461,7 +1459,7 @@ public final class LispSubrs {
     static class REMPROP extends SystemSubr.SUBR2 {
         REMPROP() { super("REMPROP"); }
         public Object call2(Object r0, Object r1, Env env) {
-            return env.lisp().remProp(Data.prop(r0), r1);
+            return env.lisp().remProp(r0, r1);
         }
         public boolean canProduceValues(int nargs) {
             return false;
@@ -1470,7 +1468,7 @@ public final class LispSubrs {
     static class PLIST extends SystemSubr.SUBR1 {
         PLIST() { super("PLIST"); }
         public Object call1(Object r0, Env env) {
-            return env.lisp().getPlist(Data.prop(r0));
+            return env.lisp().getPlist(r0);
         }
         public boolean canProduceValues(int nargs) {
             return false;
@@ -1479,7 +1477,7 @@ public final class LispSubrs {
     static class SETPLIST extends SystemSubr.SUBR2 {
         SETPLIST() { super("SETPLIST"); }
         public Object call2(Object r0, Object r1, Env env) {
-            env.lisp().setPlist(Data.prop(r0), r1);
+            env.lisp().setPlist(r0, r1);
             return r1;
         }
         public boolean canProduceValues(int nargs) {
