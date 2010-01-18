@@ -56,7 +56,7 @@ public final class Def {
     /**
      * Executes DEFUN.
      * The definition of the DEFUN form is 
-     * <code>(DEFUN name {type} lambdaList . body)</code>.
+     * <code>(DEFUN name [type] lambdaList . body)</code>.
      * When <code>type</code> is omitted,
      * <code>EXPR</code> is used as default value.
      * @param args CDR of DEFUN form
@@ -247,7 +247,7 @@ public final class Def {
     /**
      * Executes DEFVAR.
      * The definition of the DEFVAR form is 
-     * <code>(DEFVAR sym {initform})</code>.
+     * <code>(DEFVAR sym [initform])</code>.
      * @param args CDR of DEFVAR form
      * @param env
      * @return Symbol which represents the variable
@@ -308,7 +308,7 @@ public final class Def {
     /**
      * Executes DEFPACKAGE.
      * The definition of the DEFPACKAGE form is 
-     * <code>(DEFPACKAGE pkgname {options})</code>.
+     * <code>(DEFPACKAGE pkgname {option}*)</code>.
      * @param args CDR of DEFPACKAGE form.
      * @param env
      * @return Symbol which represents the variable

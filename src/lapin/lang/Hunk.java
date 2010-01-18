@@ -21,7 +21,7 @@ package lapin.lang;
 /**
  * Maclisp HUNK. 
  * Note that this code is nothing but a stub for the rabbit
- * compiler (in AITR-474) to run on this lisp system.
+ * compiler (in AITR-474) to run under this lisp system.
  */
 public class Hunk {
     private final Object[] data;

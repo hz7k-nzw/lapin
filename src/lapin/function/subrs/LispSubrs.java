@@ -1072,8 +1072,8 @@ public final class LispSubrs {
             int i = 1;
             for (Object l = rest; !Lists.isEnd(l); l = Lists.cdr(l)) {
                 if (Lists.isEnd(Lists.cdr(l))) {
-                    // last element is stored in 0th position,
-                    // which corresponds to "CDR" of the hunk.
+                    // the last element is stored in 0th position,
+                    // which corresponds to the "CDR" of the hunk.
                     Hunks.rplacx(0, hnk, Lists.car(l));
                 }
                 else

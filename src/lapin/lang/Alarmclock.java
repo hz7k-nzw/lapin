@@ -33,7 +33,7 @@ import java.util.TimerTask;
 /**
  * Maclisp ALARMCLOCK.
  * Note that this code is nothing but a stub for the archaic
- * scheme (in AIM-349) to run on this lisp system.
+ * scheme interpreter (in AIM-349) to run under this lisp system.
  */
 public class Alarmclock {
     private Timer timer = null;

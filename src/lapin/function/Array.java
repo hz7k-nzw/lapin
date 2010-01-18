@@ -25,8 +25,8 @@ import lapin.lang.Symbol;
 import lapin.lang.Symbols;
 
 /**
- * Base class for MACLISP array.
- * Note that MACLISP treats array like a function,
+ * Base class for Maclisp ARRAY.
+ * Note that Maclisp treats array like a function,
  * which means FUNCALL, APPLY accepts array as a function object.
  */
 public abstract class Array extends Subr implements lapin.lang.Array {

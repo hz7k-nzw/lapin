@@ -92,10 +92,11 @@ public final class IO {
      *        then the input stream is created.
      *        If <code>:OUTPUT</code> is specified,
      *        then the output stream is created.
-     * @param elementType Keyword, <code>:CHARACTER or :SIGNED-BYTE</code>.
-     *        If <code>:CHARACTER</code> is specified,
+     * @param elementType Symbol (not keyword),
+     *        <code>CHARACTER or SIGNED-BYTE</code>.
+     *        If <code>CHARACTER</code> is specified,
      *        then the character stream is created.
-     *        If <code>:SIGNED-BYTE</code> is specified,
+     *        If <code>SIGNED-BYTE</code> is specified,
      *        then the binary stream is created.
      * @param ifExists Keyword which specifies the action to be taken
      *        if the :direction is :output and a file specified by
@@ -388,10 +389,12 @@ public final class IO {
      *        Else if NIL, then no wrapping is applied.
      *        Else, for each keyword in the list (from left to right)
      *        wrapper specified by the keyword is applied to the stream.
-     *        Available options are;
-     *        <code>:USE-BUFFER</code> -&gt; {@link BufferedInputStream},
-     *        <code>:USE-UNREAD</code> -&gt; {@link PushbackInputStream},
-     *        <code>:USE-OBJECT</code> -&gt; {@link ObjectInputStream}.
+     *        Available options are as follows:
+     *        <ul>
+     *        <li><code>:USE-BUFFER</code> -&gt; {@link BufferedInputStream}
+     *        <li><code>:USE-UNREAD</code> -&gt; {@link PushbackInputStream}
+     *        <li><code>:USE-OBJECT</code> -&gt; {@link ObjectInputStream}
+     *        </ul>
      *        The default wrapping is <code>(:USE-BUFFER)</code>.
      * @return Wrapped binary input stream
      * @throws StreamException
@@ -435,10 +438,12 @@ public final class IO {
      *        Else if NIL, then no wrapping is applied.
      *        Else, for each keyword in the list (from left to right)
      *        wrapper specified by the keyword is applied to the stream.
-     *        Available options are;
-     *        <code>:USE-BUFFER</code> -&gt; {@link BufferedOutputStream},
-     *        <code>:USE-PRINT</code> -&gt; {@link PrintStream},
-     *        <code>:USE-OBJECT</code> -&gt; {@link ObjectOutputStream}.
+     *        Available options are as follows:
+     *        <ul>
+     *        <li><code>:USE-BUFFER</code> -&gt; {@link BufferedOutputStream}
+     *        <li><code>:USE-PRINT</code> -&gt; {@link PrintStream}
+     *        <li><code>:USE-OBJECT</code> -&gt; {@link ObjectOutputStream}
+     *        </ul>
      *        The default wrapping is <code>(:USE-BUFFER)</code>.
      * @return Wrapped binary output stream
      * @throws StreamException
@@ -482,10 +487,12 @@ public final class IO {
      *        Else if NIL, then no wrapping is applied.
      *        Else, for each keyword in the list (from left to right)
      *        wrapper specified by the keyword is applied to the stream.
-     *        Available options are;
-     *        <code>:USE-BUFFER</code> -&gt; {@link BufferedReader},
-     *        <code>:USE-UNREAD</code> -&gt; {@link PushbackReader},
-     *        <code>:USE-LINENUMBER</code> -&gt; {@link LineNumberReader}.
+     *        Available options are as follows:
+     *        <ul>
+     *        <li><code>:USE-BUFFER</code> -&gt; {@link BufferedReader}
+     *        <li><code>:USE-UNREAD</code> -&gt; {@link PushbackReader}
+     *        <li><code>:USE-LINENUMBER</code> -&gt; {@link LineNumberReader}
+     *        </ul>
      *        The default wrapping is <code>(:USE-BUFFER :USE-UNREAD)</code>.
      * @return Wrapped character input stream
      * @throws StreamException
@@ -522,9 +529,11 @@ public final class IO {
      *        Else if NIL, then no wrapping is applied.
      *        Else, for each keyword in the list (from left to right)
      *        wrapper specified by the keyword is applied to the stream.
-     *        Available options are;
-     *        <code>:USE-BUFFER</code> -&gt; {@link BufferedWriter},
-     *        <code>:USE-PRINT</code> -&gt; {@link PrintWriter}.
+     *        Available options are as follows:
+     *        <ul>
+     *        <li><code>:USE-BUFFER</code> -&gt; {@link BufferedWriter}
+     *        <li><code>:USE-PRINT</code> -&gt; {@link PrintWriter}
+     *        </ul>
      *        The default wrapping is <code>(:USE-BUFFER :USE-PRINT)</code>.
      * @return Wrapped character output stream
      * @throws StreamException
