@@ -165,13 +165,13 @@ public final class Lisp {
         defconst(Symbols.FUNCTION_INDICATORS,
                  Lists.copyList(Symbols.FUNCTION_INDICATOR_LIST));
         defvar(Symbols.ALARMCLOCK, Symbols.NIL);
-        defvar(Symbols.COMPILE_INPUT_DIR);
-        defvar(Symbols.COMPILE_OUTPUT_DIR);
-        defvar(Symbols.COMPILE_CLASS_DIR);
-        defvar(Symbols.LOAD_DIR);
+        defvar(Symbols.COMPILE_INPUT_DIR, Symbols.NIL);
+        defvar(Symbols.COMPILE_OUTPUT_DIR, Symbols.NIL);
+        defvar(Symbols.COMPILE_CLASS_DIR, Symbols.NIL);
+        defvar(Symbols.LOAD_DIR, Symbols.NIL);
         defvar(Symbols.LOG_LEVEL, Constants.LOG_LEVEL);
         defvar(Symbols.LOG_OUT, Lisp.SYS_ERR);
-        defvar(SysSymbols.CLASS_LOADER);
+        defvar(SysSymbols.CLASS_LOADER, Symbols.NIL);
         defvar(SysSymbols.BYTE_CODE_GENERATOR_CLASSNAME,
                Constants.BYTE_CODE_GENERATOR_CLASSNAME);
         defvar(SysSymbols.FUN_ID, Data.toFixnum(0));

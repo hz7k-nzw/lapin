@@ -478,8 +478,9 @@ public final class Loader {
     }
 
     static public ClassLoader getClassLoader(Env env) {
-        if (env.isBound(SysSymbols.CLASS_LOADER))
-            return Data.classLoader(env.get(SysSymbols.CLASS_LOADER));
+        Object val = env.get(SysSymbols.CLASS_LOADER);
+        if (val != Symbols.NIL)
+            return Data.classLoader(val);
         else
             return Loader.class.getClassLoader();
     }

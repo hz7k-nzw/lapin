@@ -710,8 +710,9 @@ public final class IO {
         object which represents a directory specified by the value. */
     static public File dir(Symbol key, Env env) {
         File dir;
-        if (env.isBound(key)) {
-            dir = new File(Data.string(env.get(key)));
+        Object val = env.get(key);
+        if (val != Symbols.NIL) {
+            dir = new File(Data.string(val));
             if (!dir.exists()) {
                 throw new FileException
                     ("dir for ~S not found: ~S.",
