@@ -1,0 +1,1647 @@
+This is a list of functions, special forms, and other objects
+available in LAPIN. Many of the functions listed bellow can be
+found in "The Pitmanual" (http://maclisp.info/pitmanual/index.html).
+
+
+=============================
+Data
+=============================
+object [Data type]
+java.lang.Object
+
+list [Data type]
+lapin.lang.List
+
+pair [Data type]
+lapin.lang.Pair (implements lapin.lang.List)
+
+symbol [Data type]
+lapin.lang.Symbol
+
+t [Data type]
+lapin.lang.T (extends lapin.lang.Symbol)
+
+nil [Data type]
+lapin.lang.Nil (extends lapin.lang.Symbol implements lapin.lang.List)
+
+package [Data type]
+lapin.lang.Package
+
+fixnum [Data type]
+java.lang.Integer or int
+
+flonum [Data type]
+java.lang.Double or double
+
+bignum [Data type]
+java.math.BigInteger
+
+number [Data type]
+fixnum or flonum or bignum
+
+character [Data type]
+java.lang.Character or char
+
+string [Data type]
+java.lang.String
+
+function [Data type]
+lapin.function.Function
+
+array [Data type]
+lapin.lang.Array
+
+hunk [Data type]
+lapin.lang.Hunk
+;; note: Hunk is treated as ATOM in this system.
+
+file [Data type]
+java.io.File
+
+binary input stream [Data type]
+java.io.InputStream
+
+binary output stream [Data type]
+java.io.OutputStream
+
+character input stream [Data type]
+java.io.Reader
+
+character output stream [Data type]
+java.io.Writer
+
+stream [Data type]
+binary input stream or
+binary output stream or
+character input stream or
+character output stream
+
+ATOM [Function]
+(ATOM obj) => bool
+obj -- object
+bool -- t or nil
+
+LISTP [Function]
+(LISTP obj) => bool
+obj -- object
+bool -- t or nil
+
+PAIRP [Function]
+(PAIRP obj) => bool
+obj -- object
+bool -- t or nil
+
+SYMBOLP [Function]
+(SYMBOLP obj) => bool
+obj -- object
+bool -- t or nil
+
+FIXNUMP [Function]
+(FIXNUMP obj) => bool
+obj -- object
+bool -- t or nil
+
+FLOATP [Function]
+(FLOATP obj) => bool
+obj -- object
+bool -- t or nil
+
+BIGP [Function]
+(BIGP obj) => bool
+obj -- object
+bool -- t or nil
+
+NUMBERP [Function]
+(NUMBERP obj) => bool
+obj -- object
+bool -- t or nil
+
+JAVA-NUMBER-P [Function]
+(JAVA-NUMBER-P obj) => bool
+obj -- object
+bool -- t or nil
+
+ARRAYP [Function]
+(ARRAYP obj) => bool
+obj -- object
+bool -- t or nil
+
+HUNKP [Function]
+(HUNKP obj) => bool
+obj -- object
+bool -- t or nil
+
+CHARACTERP [Function]
+(CHARACTERP obj) => bool
+obj -- object
+bool -- t or nil
+
+STRINGP [Function]
+(STRINGP obj) => bool
+obj -- object
+bool -- t or nil
+
+FUNCTIONP [Function]
+(FUNCTIONP obj) => bool
+obj -- object
+bool -- t or nil
+
+EXPRP [Function]
+(EXPRP obj) => bool
+obj -- object
+bool -- t or nil
+
+SUBRP [Function]
+(SUBRP obj) => bool
+obj -- object
+bool -- t or nil
+
+INPUT-STREAM-P [Function]
+(INPUT-STREAM-P obj) => bool
+obj -- object
+bool -- t or nil
+
+OUTPUT-STREAM-P [Function]
+(OUTPUT-STREAM-P obj) => bool
+obj -- object
+bool -- t or nil
+
+READERP [Function]
+(READERP obj) => bool
+obj -- object
+bool -- t or nil
+
+WRITERP [Function]
+(WRITERP obj) => bool
+obj -- object
+bool -- t or nil
+
+TYPEP [Function]
+(TYPEP obj) => type
+obj -- object
+type -- symbol
+
+NIL [Constant]
+NIL => NIL
+
+T [Constant]
+T => T
+
+NOT [Function]
+(NOT obj) => bool
+obj -- object
+bool -- t or nil
+
+NULL [Function]
+(NULL obj) => bool
+obj -- object
+bool -- t or nil
+
+EQ [Function]
+(EQ obj1 obj2) => bool
+obj1 -- object
+obj2 -- object
+bool -- t or nil
+
+EQUAL [Function]
+(EQUAL obj1 obj2) => bool
+obj1 -- object
+obj2 -- object
+bool -- t or nil
+
+FIXNUM [Function]
+(FIXNUM obj) => i
+obj -- object
+i -- fixnum
+
+FLONUM [Function]
+(FLONUM obj) => d
+obj -- object
+d -- flonum
+
+BIGNUM [Function]
+(BIGNUM obj) => n
+obj -- object
+n -- bignum
+
+CHARACTER [Function]
+(CHARACTER obj) => c
+obj -- object
+c -- character
+
+=============================
+List
+=============================
+CONS [Function]
+(CONS obj1 obj1) => p
+obj1 -- object
+obj2 -- object
+p -- pair
+
+LIST [Function]
+(LIST &rest args) => lst
+args -- list of object
+lst -- list
+
+LIST* [Function]
+(LIST* &rest args) => lst
+args -- list of object
+lst -- list
+
+CAR [Function]
+(CAR lst) => obj
+lst -- list
+obj -- object
+
+CDR [Function]
+(CDR lst) => obj
+lst -- list
+obj -- object
+
+CAAR [Function]
+(CAAR lst) = (CAR (CAR lst))
+
+CADR [Function]
+(CADR lst) = (CAR (CDR lst))
+
+CDAR [Function]
+(CDAR lst) = (CDR (CAR lst))
+
+CDDR [Function]
+(CDDR lst) = (CDR (CDR lst))
+
+CAAAR [Function]
+(CAAAR lst) = (CAR (CAR (CAR lst)))
+
+CAADR [Function]
+(CAADR lst) = (CAR (CAR (CDR lst)))
+
+CADAR [Function]
+(CADAR lst) = (CAR (CDR (CAR lst)))
+
+CADDR [Function]
+(CADDR lst) = (CAR (CDR (CDR lst)))
+
+CDAAR [Function]
+(CDAAR lst) = (CDR (CAR (CAR lst)))
+
+CDADR [Function]
+(CDADR lst) = (CDR (CAR (CDR lst)))
+
+CDDAR [Function]
+(CDDAR lst) = (CDR (CDR (CAR lst)))
+
+CDDDR [Function]
+(CDDDR lst) = (CDR (CDR (CDR lst)))
+
+CAAAAR [Function]
+(CAAAAR lst) = (CAR (CAR (CAR (CAR lst))))
+
+CAAADR [Function]
+(CAAADR lst) = (CAR (CAR (CAR (CDR lst))))
+
+CAADAR [Function]
+(CAADAR lst) = (CAR (CAR (CDR (CAR lst))))
+
+CAADDR [Function]
+(CAADDR lst) = (CAR (CAR (CDR (CDR lst))))
+
+CADAAR [Function]
+(CADAAR lst) = (CAR (CDR (CAR (CAR lst))))
+
+CADADR [Function]
+(CADADR lst) = (CAR (CDR (CAR (CDR lst))))
+
+CADDAR [Function]
+(CADDAR lst) = (CAR (CDR (CDR (CAR lst))))
+
+CADDDR [Function]
+(CADDDR lst) = (CAR (CDR (CDR (CDR lst))))
+
+CDAAAR [Function]
+(CDAAAR lst) = (CDR (CAR (CAR (CAR lst))))
+
+CDAADR [Function]
+(CDAADR lst) = (CDR (CAR (CAR (CDR lst))))
+
+CDADAR [Function]
+(CDADAR lst) = (CDR (CAR (CDR (CAR lst))))
+
+CDADDR [Function]
+(CDADDR lst) = (CDR (CAR (CDR (CDR lst))))
+
+CDDAAR [Function]
+(CDDAAR lst) = (CDR (CDR (CAR (CAR lst))))
+
+CDDADR [Function]
+(CDDADR lst) = (CDR (CDR (CAR (CDR lst))))
+
+CDDDAR [Function]
+(CDDDAR lst) = (CDR (CDR (CDR (CAR lst))))
+
+CDDDDR [Function]
+(CDDDDR lst) = (CDR (CDR (CDR (CDR lst))))
+
+FIRST [Function]
+(FIRST lst) = (CAR lst)
+
+SECOND [Function]
+(SECOND lst) = (CAR (CDR lst))
+
+THIRD [Function]
+(THIRD lst) = (CAR (CDR (CDR lst)))
+
+FOURTH [Function]
+(FOURTH lst) = (CAR (CDR (CDR (CDR lst))))
+
+REST [Function]
+(REST lst) = (CDR lst)
+
+LAST [Function]
+(LAST lst) => obj
+lst -- list
+obj -- object
+
+BUTLAST [Function]
+(BUTLAST lst) => obj
+lst -- list
+obj -- object
+
+NTH [Function]
+(NTH i lst) = (CAR (NTHCDR i lst))
+i -- fixnum
+lst -- list
+obj -- object
+
+NTHCDR [Function]
+(NTHCDR i lst) => sublst
+i -- fixnum
+lst -- list
+sublst -- list
+
+LENGTH [Function]
+(LENGTH lst) => len
+lst -- list
+len -- fixnum
+
+ENDP [Function]
+(ENDP lst) => bool
+lst -- list
+bool -- t or nil
+
+COPY-LIST [Function]
+(COPY-LIST lst) => ret
+lst -- list
+ret -- list
+
+RPLACA [Function]
+(RPLACA p obj) => p
+p -- pair
+obj -- object
+
+RPLACD [Function]
+(RPLACD p obj) => p
+p -- pair
+obj -- object
+
+APPEND [Function]
+(APPEND &rest lsts) => ret
+lsts -- list of list
+ret -- list
+
+NCONC [Function]
+(NCONC &rest lsts) => ret
+lsts -- list of list
+ret -- list
+
+REVERSE [Function]
+(REVERSE lst) => ret
+lst -- list
+ret -- list
+
+NREVERSE [Function]
+(NREVERSE lst) => ret
+lst -- list
+ret -- list
+
+DELETE [Function]
+(DELETE obj lst &optional n) => ret
+obj -- object
+lst -- list
+n -- fixnum
+ret -- list
+
+DELQ [Function]
+(DELQ obj lst &optional n) => ret
+obj -- object
+lst -- list
+n -- fixnum
+ret -- list
+
+MEMBER [Function]
+(MEMBER obj lst) => ret
+obj -- object
+lst -- list
+ret -- list
+
+MEMQ [Function]
+(MEMQ obj lst) => ret
+obj -- object
+lst -- list
+ret -- list
+
+POP [Special Form]
+(POP var) => value
+var -- symbol
+value -- object
+
+PUSH [Special Form]
+(PUSH obj var) => stack
+obj -- object
+var -- symbol
+stack -- list
+
+ASSOC [Function]
+(ASSOC obj alst) => p
+obj -- object
+alst -- list of pair
+p -- pair
+
+ASSQ [Function]
+(ASSQ obj alst) => p
+obj -- object
+alst -- list of pair
+p -- pair
+
+=============================
+Symbol
+=============================
+INTERN [Function]
+(INTERN pname &optional pkgname) => sym status
+pname -- string
+pkgname -- string or package
+sym -- symbol
+status -- symbol
+
+GENSYM [Function]
+(GENSYM &optional prefix) => sym
+prefix -- string
+sym -- symbol
+
+SYMBOL-NAME [Function]
+(SYMBOL-NAME sym) => pname
+sym -- symbol
+pname -- string
+
+SYMBOL-PACKAGE [Function]
+(SYMBOL-PACKAGE sym) => pkg
+sym -- symbol
+pkg -- package
+
+FIND-SYMBOL [Function]
+(FIND-SYMBOL pname &optional pkgname) => sym status
+pname -- string
+pkgname -- string or package
+sym -- symbol
+status -- symbol
+
+IMPLODE [Function]
+(IMPLODE lst) => sym
+lst -- list of (symbol or character or fixnum)
+sym -- symbol
+
+EXPLODEN [Function]
+(EXPLODEN sym) => lst
+sym -- symbol
+lst -- list of fixnum
+
+PLIST [Function]
+(PLIST sym) => plst
+sym -- symbol or disembodied property list
+plst -- property list
+
+SETPLIST [Function]
+(SETPLIST sym plst) => plst
+sym -- symbol or disembodied property list
+plst -- property list
+
+GET [Function]
+(GET sym indicator) => val
+sym -- symbol or disembodied property list
+indicator -- object
+val -- object
+
+GETL [Function]
+(GET sym indicator) => plst
+sym -- symbol or disembodied property list
+indlst -- list of symbol
+plst -- property list
+
+PUTPROP [Function]
+(PUTPROP sym val indicator) => val
+sym -- symbol or disembodied property list
+indicator -- object
+val -- object
+
+REMPROP [Function]
+(REPPROP sym indicator) => bool
+sym -- symbol or disembodied property list
+indicator -- object
+bool -- t or nil
+
+=============================
+Package
+=============================
+*PACKAGE* [Variable]
+*PACKAGE* => curpkg
+curpkg -- package
+
+MAKE-PACKAGE [Function]
+(MAKE-PACKAGE pkgname &key use) => pkg
+pkgname -- string or package
+use -- list of (string or package)
+pkg -- package
+
+EXPORT [Function]
+(EXPORT sym &optional pkgname) => T
+sym -- symbol or list of symbol
+pkgname -- string or package
+
+IMPORT [Function]
+(IMPORT sym &optional pkgname) => T
+sym -- symbol or list of symbol
+pkgname -- string or package
+
+USE-PACKAGE [Function]
+(USE-PACKAGE pkgnameUsed &optional pkgname) => T
+pkgnameUsed -- package or list of package
+pkgname -- string or package
+
+IN-PACKAGE [Special Form]
+(IN-PACKAGE pkgname) => pkg
+pkgname -- string or package
+pkg -- package
+
+FIND-PACKAGE [Function]
+(FIND-PACKAGE pkgname) => pkg
+pkgname -- string or package
+pkg -- package
+
+MAPATOMS [Function]
+(MAPATOMS fun pkgname) => NIL
+fun -- function
+pkgname -- string or package
+
+=============================
+Number
+=============================
+PLUS [Function]
+(PLUS &rest numbers) => sum
+numbers -- list of number
+sum -- number
+
++ [Function]
+(+ &rest numbers) => sum
+numbers -- list of fixnum
+sum -- fixnum
+
++$ [Function]
+(+$ &rest numbers) => sum
+numbers -- list of flonum
+sum -- flonum
+
+ADD1 [Function]
+(ADD1 n) = (PLUS n 1)
+
+1+ [Function]
+(1+ i) = (+ i 1)
+
+1+$ [Function]
+(1+$ d) = (+$ d 1.0)
+
+DIFFERENCE [Function]
+(DIFFERENCE) => 0
+(DIFFERENCE n) => negation
+(DIFFERENCE n &rest numbers) => subtraction
+n -- number
+negation -- number
+numbers -- list of number
+subtraction -- number
+
+- [Function]
+(-) => 0
+(- i) => negation
+(- i &rest numbers) => subtraction
+i -- fixnum
+negation -- fixnum
+numbers -- list of fixnum
+subtraction -- fixnum
+
+-$ [Function]
+(-$) => 0.0
+(-$ d) => negation
+(-$ d &rest numbers) => subtraction
+d -- flonum
+negation -- flonum
+numbers -- list of flonum
+subtraction -- flonum
+
+SUB1 [Function]
+(SUB1 n) = (DIFFERENCE n 1)
+
+1- [Function]
+(1- i) = (- i 1)
+
+1-$ [Function]
+(1-$ d) = (-$ d 1.0)
+
+TIMES [Function]
+(TIMES &rest numbers) => product
+numbers -- list of number
+product -- number
+
+* [Function]
+(* &rest numbers) => product
+numbers -- list of fixnum
+product -- fixnum
+
+*$ [Function]
+(*$ &rest numbers) => product
+numbers -- list of flonum
+product -- flonum
+
+QUOTIENT [Function]
+(QUOTIENT) => 1
+(QUOTIENT n) => n (identity operation)
+(QUOTIENT n &rest numbers) => quotient
+n -- number
+numbers -- list of number
+quotient -- number
+
+// [Function]
+(//) => 1
+(// i) => i (identity operation)
+(// i &rest numbers) => quotient
+i -- fixnum
+numbers -- list of fixnum
+quotient -- fixnum
+
+//$ [Function]
+(//$) => 1.0
+(//$ d) => inverse
+(//$ d &rest numbers) => quotient
+d -- flonum
+inverse -- flonum
+numbers -- list of flonum
+quotient -- flonum
+
+REMAINDER [Function]
+(REMAINDER n1 n2) => mod
+n1 -- fixnum or bignum
+n2 -- fixnum or bignum
+mod -- number
+
+% [Function]
+(% i1 i2) => mod
+i1 -- fixnum
+i2 -- fixnum
+mod -- fixnum
+
+LESSP [Function]
+(LESSP n1 n2 &rest numbers) => bool
+n1 -- number
+n2 -- number
+numbers -- list of number
+bool -- t or nil
+
+< [Function]
+(< i1 i2) => bool
+(< d1 d2) => bool
+i1 -- fixnum
+i2 -- fixnum
+d1 -- flonum
+d2 -- flonum
+bool -- t or nil
+
+LESS-OR-EQUALP [Function]
+(LESS-OR-EQUALP n1 n2 &rest numbers) => bool
+n1 -- number
+n2 -- number
+numbers -- list of number
+bool -- t or nil
+
+<= [Function]
+(<= i1 i2) => bool
+(<= d1 d2) => bool
+i1 -- fixnum
+i2 -- fixnum
+d1 -- flonum
+d2 -- flonum
+bool -- t or nil
+
+EQUALP [Function]
+(EQUALP n1 n2 &rest numbers) => bool
+n1 -- number
+n2 -- number
+numbers -- list of number
+bool -- t or nil
+
+= [Function]
+(= i1 i2) => bool
+(= d1 d2) => bool
+i1 -- fixnum
+i2 -- fixnum
+d1 -- flonum
+d2 -- flonum
+bool -- t or nil
+
+GREATERP [Function]
+(GREATERP n1 n2 &rest numbers) => bool
+n1 -- number
+n2 -- number
+numbers -- list of number
+bool -- t or nil
+
+> [Function]
+(> i1 i2) => bool
+(> d1 d2) => bool
+i1 -- fixnum
+i2 -- fixnum
+d1 -- flonum
+d2 -- flonum
+bool -- t or nil
+
+GREATER-OR-EQUALP [Function]
+(GREATER-OR-EQUALP n1 n2 &rest numbers) => bool
+n1 -- number
+n2 -- number
+numbers -- list of number
+bool -- t or nil
+
+>= [Function]
+(>= i1 i2) => bool
+(>= d1 d2) => bool
+i1 -- fixnum
+i2 -- fixnum
+d1 -- flonum
+d2 -- flonum
+bool -- t or nil
+
+ABS [Function]
+(ABS n) => abs
+n -- number
+abs -- number
+
+EVENP [Function]
+(EVENP n) => bool
+n -- number
+bool -- t or nil
+
+ODDP [Function]
+(ODDP n) => bool
+n -- number
+bool -- t or nil
+
+PLUSP [Function]
+(PLUSP n) => bool
+n -- number
+bool -- t or nil
+
+MINUSP [Function]
+(MINUSP n) => bool
+n -- number
+bool -- t or nil
+
+ZEROP [Function]
+(ZEROP n) => bool
+n -- number
+bool -- t or nil
+
+FIXP [Function]
+(FIXP n) => bool
+n -- number
+bool -- t or nil
+
+FIX [Function]
+(FIX obj) => n
+obj -- object
+n -- fixnum or bignum
+
+IFIX [Function]
+(IFIX obj) => i
+obj -- object
+i -- fixnum
+
+MAX [Function]
+(MAX n1 n2 &rest numbers) => max
+n1 -- number
+n2 -- number
+numbers -- list of number
+max -- number
+
+MIN [Function]
+(MIN n1 n2 &rest numbers) => min
+n1 -- number
+n2 -- number
+numbers -- list of number
+min -- number
+
+MINUS [Function]
+(MINUS n) => negation
+n -- number
+negation -- number
+
+EXP [Function]
+(EXP n) => exp
+n -- number
+exp -- flonum
+
+LOG [Function]
+(LOG n) => log
+n -- number
+log -- flonum
+
+EXPT [Function]
+(EXPT n1 n2) => pow
+n1 -- number
+n2 -- number
+pow -- flonum
+
+SQRT [Function]
+(SQRT n) => sqrt
+n -- number
+sqrt -- flonum
+
+SIN [Function]
+(SIN rad) => sin
+rad -- number
+sin -- flonum
+
+COS [Function]
+(COS rad) => cos
+rad -- number
+cos -- flonum
+
+TAN [Function]
+(TAN rad) => tan
+rad -- number
+tan -- flonum
+
+ASIN [Function]
+(ASIN sin) => rad
+sin -- number
+rad -- flonum
+
+ACOS
+(ACOS cos) => rad
+cos -- number
+rad -- flonum
+
+ATAN [Function]
+(ATAN n1 &optional n2) => rad
+n1 -- number
+n2 -- number
+rad -- flonum
+
+PI [Constant]
+PI => pi
+pi -- flonum
+3.141592653589793
+
+RANDOM [Function]
+(RANDOM) => rand
+rand -- flonum
+
+=============================
+Character, String
+=============================
+
+=============================
+Array, Hunk
+=============================
+*ARRAY [Function]
+(*ARRAY nil type &rest dims) => new-array
+(*ARRAY name type &rest dims) => name
+name -- symbol
+type -- symbol (whose value is T, FIXNUM, or FLONUM)
+dims -- list of fixnum
+new-array -- array
+
+ARRAY [Special Form]
+(ARRAY nil type &rest dims) => new-array
+(ARRAY name type &rest dims) => name
+name -- symbol
+type -- symbol (whose value is T, FIXNUM, or FLONUM)
+dims -- list of fixnum
+new-array -- array
+
+ARRAY-TYPE [Function]
+(ARRAY-TYPE a) => type
+a -- array
+type -- symbol
+
+ARRAYCALL [Special Form]
+(ARRAYCALL type a &rest indices) => obj
+type -- symbol
+a -- array
+indices -- list of fixnum
+obj -- object
+
+ARRAYDIMS [Function]
+(ARRAYDIMS a) => info
+a -- array
+info -- list
+
+STORE [Special Form]
+(STORE (ARRAYCALL type a ...) value) => value
+(STORE (FUNCALL a ...) value) => value
+(STORE (APPLY a ...) value) => value
+(STORE (name ...) value) => value
+type -- symbol
+name -- symbol
+a -- array
+value -- object
+
+HUNK [Function]
+(HUNK &rest args) => new-hunk
+args -- list of object
+new-hunk -- hunk
+;; note: The last element of args is stored in 0th position.
+
+MAKHUNK [Function]
+(MAKHUNK len) => new-hunk
+len -- fixnum
+new-hunk -- hunk
+
+HUNKSIZE [Function]
+(HUNKSIZE h) => len
+h -- hunk
+len -- fixnum
+
+CXR [Function]
+(CXR n h) => val
+n -- fixnum
+h -- hunk
+val -- object
+
+RPLACX [Function]
+(RPLACX n h val) => h
+n -- fixnum
+h -- hunk
+val -- object
+
+=============================
+Control
+=============================
+IF [Special Form]
+(IF test then [else])
+
+AND [Special Form]
+(AND {form}*)
+
+OR [Special Form]
+(OR {form}*)
+
+COND [Special Form]
+(COND {(test {form}*)}*)
+
+WHEN [Special Form]
+(WHEN test {form}*)
+
+UNLESS [Special Form]
+(UNLESS test {form}*)
+
+QUOTE [Special Form]
+(QUOTE form) => form
+'form => form
+
+FUNCTION [Special Form]
+(FUNCTION form) => fun
+#'form => fun
+fun -- function
+
+SETQ [Special Form]
+(SETQ {var form}*)
+var -- symbol
+
+PSETQ [Special Form]
+(PSETQ {var form}*)
+var -- symbol
+
+PROGN [Special Form]
+(PROGN {form}*)
+
+PROG1 [Special Form]
+(PROG1 form1 {form}*)
+
+PROG2 [Special Form]
+(PROG1 form1 form2 {form}*)
+
+PROG [Special Form]
+(PROG ({var}*) {tag | form}*)
+var -- symbol
+
+RETURN [Special Form]
+(RETURN {form}*)
+
+GO [Special Form]
+(GO {tag | tagform})
+tag -- symbol
+
+DO [Special Form]
+(DO ({var | (var [init [step]])}*)
+    (end-test {result}*)
+    {decl}*
+    {tag | statement}*)
+var -- symbol
+tag -- symbol
+
+DO* [Special Form]
+(DO* ({var | (var [init [step]])}*)
+     (end-test {result}*)
+     {decl}*
+     {tag | statement}*)
+var -- symbol
+tag -- symbol
+
+DOLIST [Special Form]
+(DOLIST (var lstform [result]) {decl}* {tag | statement}*)
+var -- symbol
+tag -- symbol
+
+DOTIMES [Special Form]
+(DOTIMES (var cntform [result]) {decl}* {tag | statement}*)
+var -- symbol
+tag -- symbol
+
+LET [Special Form]
+(LET ({var | (var [init])}*) {decl}* {form}*)
+
+LET* [Special Form]
+(LET* ({var | (var [init])}*) {decl}* {form}*)
+
+DESTRUCTURING-BIND [Special Form]
+(DESTRUCTURING-BIND lambda-list expression {decl}* {form}*)
+
+*THROW [Special Form]
+(*THROW tagform form)
+
+*CATCH [Special Form]
+(*CATCH tagform {form}*)
+
+UNWIND-PROTECT [Special Form]
+(UNWIND-PROTECT form {cleanup}*)
+
+ERROR [Function]
+(ERROR &optional msg datum kwd)
+msg -- string
+datum -- object
+kwd -- symbol
+
+MULTIPLE-VALUE-BIND [Special Form]
+(MULTIPLE-VALUE-BIND ({var}*) values {decl}* {form}*)
+var -- symbol
+
+MULTIPLE-VALUE-LIST [Special Form]
+(MULTIPLE-VALUE-LIST values) => lst
+lst -- list
+
+MULTIPLE-VALUE-SETQ [Special Form]
+(MULTIPLE-VALUE-SETQ ({var}*) values)
+
+NTH-VALUE [Special Form]
+(NTH-VALUE n values) => val
+n -- fixnum
+val -- object
+
+VALUES [Function]
+(VALUES &rest args) => {val}*
+args -- list of object
+val -- object
+
+COMMENT [Special Form]
+(COMMENT &rest ignored) => COMMENT
+
+=============================
+Def
+=============================
+DEFVAR [Special Form]
+(DEFVAR var &optional init) => var
+var -- symbol
+
+DEFCONST [Special Form]
+(DEFCONST var init) => var
+var -- symbol
+
+DEFPACKAGE [Special Form]
+(DEFPACKAGE name
+            {[(:use {use-pkgname}*)]|
+             [(:import-from imp-pkgname {imp-pname}*)]|
+	     [(:intern {intern-pname}*)]|
+	     [(:export {exp-pname}*)]}*) => pkg
+use-pkgname -- string
+imp-pkgname -- string
+imp-pname -- string
+intern-pname -- string
+exp-pname -- string
+pkg -- package
+
+DEFPROP [Special Form]
+(DEFPROP name val indicator) => name
+name -- symbol
+indicator -- symbol
+
+DEFUN [Special Form]
+(DEFUN name lambda-list &rest body) => name
+(DEFUN name lambda-list EXPR &rest body) => name
+(DEFUN name (var) FEXPR &rest body) => name
+(DEFUN name (var) MACRO &rest body) => name
+name -- symbol
+var -- symbol
+
+DEFMACRO [Special Form]
+(DEFMACRO name lambda-list &rest body) => name
+
+DEFINE-COMPILER-MACRO [Special Form]
+(DEFINE-COMPILER-MACRO name lambda-list &rest body) => name
+
+=============================
+Eval, Funcall, Macro
+=============================
+EVAL [Function]
+(EVAL form) => ret
+form -- object
+ret -- object
+
+APPLY [Function]
+(APPLY fun arg &rest args)
+fun -- symbol or lambda-expression or function
+arg -- object (if args is null, then arg must be list)
+args -- list (if args is not null, then the last element of args must be list)
+
+FUNCALL [Function]
+(FUNCALL fun &rest args)
+fun -- symbol or lambda-expression or function
+args -- list
+
+SUBRCALL [Specail Form]
+(SUBRCALL type fun &rest args) = (FUNCALL fun &rest args)
+;; note: type is ignored.
+
+SYMEVAL [Function]
+(SYMEVAL sym) => val
+sym -- symbol
+val -- object
+
+SET [Function]
+(SET sym val) => val
+sym -- symbol
+val -- object
+
+BOUNDP [Function]
+(BOUNDP sym) => bool
+sym -- symbol
+bool -- t or nil
+
+CONSTANTP [Function]
+(CONSTANTP form) => bool
+form -- object
+bool -- t or nil
+
+MAPCAR [Function]
+(MAPCAR fun lst &rest lsts) => vals
+fun -- symbol or lambda-expression or function
+lst -- list
+lsts -- list of list
+vals -- list
+
+MAPLIST [Function]
+(MAPLIST fun lst &rest lsts) => vals
+fun -- symbol or lambda-expression or function
+lst -- list
+lsts -- list of list
+vals -- list
+
+MAPC [Function]
+(MAPC fun lst &rest lsts) => ret
+fun -- symbol or lambda-expression or function
+lst -- list
+lsts -- list of list
+ret -- object
+
+MAPL [Function]
+(MAPL fun lst &rest lsts) => ret
+fun -- symbol or lambda-expression or function
+lst -- list
+lsts -- list of list
+ret -- object
+
+MAPCAN [Function]
+(MAPCAR fun lst &rest lsts) => vals-concatenated
+fun -- symbol or lambda-expression or function
+lst -- list
+lsts -- list of list
+vals-concatenated -- list
+
+MAPCON [Function]
+(MAPLIST fun lst &rest lsts) => vals-concatenated
+fun -- symbol or lambda-expression or function
+lst -- list
+lsts -- list of list
+vals-concatenated -- list
+
+EVERY [Function]
+(EVERY pred lst &rest lsts) => bool
+pred -- symbol or lambda-expression or function
+lst -- list
+lsts -- list of list
+bool -- t or nil
+
+SOME [Function]
+(SOME pred lst &rest lsts) => ret
+pred -- symbol or lambda-expression or function
+lst -- list
+lsts -- list of list
+ret -- object
+
+REDUCE [Function]
+(REDUCE fun lst &key from-end initial-value)
+fun -- symbol or lambda-expression or function
+lst -- list
+from-end -- t or nil
+initial-value -- object
+;; note: "key", "start", and "end" are not supported.
+
+MACROEXPAND [Function]
+(MACROEXPAND form) => ret bool
+form -- object
+ret -- object
+bool -- t or nil
+
+MACROEXPAND-1 [Function]
+(MACROEXPAND-1 form) => ret bool
+form -- object
+ret -- object
+bool -- t or nil
+
+BACKQUOTE [Special Form]
+(BACKQUOTE form)
+`form
+
+LAMBDA-LIST-KEYWORDS [Constant]
+LAMBDA-LIST-KEYWORDS => keywords
+keywords -- list of symbol
+
+=============================
+IO
+=============================
+OPEN [Function]
+(OPEN src
+      &key delection
+           element-type
+           if-exists
+           if-does-not-exist
+           external-format
+           wrap-options) => s
+src -- string or file
+direction -- keyword, :INPUT or :OUTPUT
+element-type -- symbol, CHARACTER or SIGNED-BYTE
+if-exists -- keyword, :OVERWRITE or :APPEND
+if-does-not-exists -- keyword, :ERROR or :CREATE
+external-format -- nil or string (such as "EUC-JP", "UTF8")
+wrap-options -- t or nil or list of keyword (see javadoc for detail)
+s -- stream
+
+CLOSE [Function]
+(CLOSE s) => T
+s -- stream
+
+*SYSTEM-BIN-IN* [Variable]
+*SYSTEM-BIN-IN* => s
+s -- binary input stream (Standard input stream)
+
+*SYSTEM-BIN-OUT* [Variable]
+*SYSTEM-BIN-OUT* => s
+s -- binary output stream (Standard output stream)
+
+*SYSTEM-BIN-ERR* [Variable]
+*SYSTEM-BIN-ERR* => s
+s -- binary output stream (Standard error stream)
+
+*SYSTEM-IN* [Variable]
+*SYSTEM-IN* => s
+s -- character input stream (Standard input stream)
+
+*SYSTEM-OUT* [Variable]
+*SYSTEM-OUT* => s
+s -- character output stream (Standard output stream)
+
+*SYSTEM-ERR* [Variable]
+*SYSTEM-ERR* => s
+s -- character output stream (Standard error stream)
+
+*NULL-BIN-IN* [Variable]
+*NULL-BIN-IN* => s
+s -- binary input stream (Null input stream)
+
+*NULL-BIN-OUT* [Variable]
+*NULL-BIN-OUT* => s
+s -- binary output stream (Null output stream)
+
+*NULL-IN* [Variable]
+*NULL-IN* => s
+s -- character input stream (Null input stream)
+
+*NULL-OUT* [Variable]
+*NULL-OUT* => s
+s -- character output stream (Null output stream)
+
+*TERMINAL-IN* [Variable]
+*TERMINAL-IN* => s
+s -- character input stream (Terminal input stream)
+
+*TERMINAL-OUT* [Variable]
+*TERMINAL-OUT* => s
+s -- character output stream (Terminal output stream)
+
+GET-OUTPUT-STREAM-STRING [Function]
+(GET-OUTPUT-STREAM-STRING s) => str
+s -- stream (created by MAKE-STRING-OUTPUT-STREAM)
+str -- string
+
+MAKE-STRING-INPUT-STREAM [Function]
+(MAKE-STRING-INPUT-STREAM str &optional start end) => s
+str -- string
+start -- fixnum
+end -- fixnum
+s -- character input stream
+
+MAKE-STRING-OUTPUT-STREAM [Function]
+(MAKE-STRING-OUTPUT-STREAM) => s
+s -- character output stream
+
+WITH-OPEN-STREAM [Special Form]
+(WITH-OPEN-STREAM (var stream) {decl}* {form}*)
+var -- symbol
+
+WITH-OPEN-FILE [Special Form]
+(WITH-OPEN-FILE (var filename {option}*) {decl}* {form}*)
+var -- symbol
+
+WITH-INPUT-FROM-STRING [Special Form]
+(WITH-INPUT-FROM-STRING (var string &key start end) {decl}* {form}*)
+var -- symbol
+start -- fixnum
+end -- fixnum
+
+WITH-OUTPUT-TO-STRING [Special Form]
+(WITH-OUTPUT-TO-STRING (var) {decl}* {form}*)
+var -- symbol
+
+READ [Function]
+(READ &optional in eof-error-p eof-value recursive-p) => obj
+in -- t or nil or character input stream
+eof-error-p -- t or nil
+eof-value -- object
+recursive-p -- t or nil
+obj -- object
+
+READ-PRESERVING-WHITE-SPACE [Function]
+(READ-PRESERVING-WHITE-SPACE
+      &optional in eof-error-p eof-value recursive-p) => obj
+in -- t or nil or character input stream
+eof-error-p -- t or nil
+eof-value -- object
+recursive-p -- t or nil
+obj -- object
+
+READ-FROM-STRING [Function]
+(READ-FROM-STRING str
+      &optional eof-error-p eof-value
+      &key start end preserve-whitespace) => obj
+str -- string
+eof-error-p -- t or nil
+eof-value -- object
+start -- nil or fixnum
+end -- nil or fixnum
+preserve-whitespace -- t or nil
+obj -- object
+;; note: "position" is not supported.
+
+*READ-EVAL* [Variable]
+*READ-EVAL* => bool
+bool -- t or nil
+
+READ-BYTE [Function]
+(READ-BYTE in &optional eof-error-p eof-value) => b
+in -- binary input stream
+eof-error-p -- t or nil
+eof-value -- object
+b -- fixnum or eof-value
+
+READ-CHAR [Function]
+(READ-CHAR &optional in eof-error-p eof-value recursive-p) => c
+in -- t or nil or character input stream
+eof-error-p -- t or nil
+eof-value -- object
+recursive-p -- t or nil
+c -- character or eof-value
+
+READ-CHAR-NO-HANG [Function]
+(READ-CHAR-NO-HANG
+           &optional in eof-error-p eof-value recursive-p) => c
+in -- t or nil or character input stream
+eof-error-p -- t or nil
+eof-value -- object
+recursive-p -- t or nil
+c -- character, nil or eof-value
+
+UNREAD-CHAR [Function]
+(UNREAD-CHAR c &optional in) => NIL
+c -- character
+in -- t or nil or character input stream
+
+LISTEN [Function]
+(LISTEN &optional in) => bool
+in -- t or nil or character input stream
+bool -- t or nil
+
+PEEK-CHAR [Function]
+(PEEK-CHAR &optional peek-type in eof-error-p eof-value recursive-p) => char
+peek-type -- t or nil or character
+in -- t or nil or character input stream
+eof-error-p -- t or nil
+eof-value -- object
+recursive-p -- t or nil
+c -- character or eof-value
+
+PEEK-CHAR-NO-HANG [Function]
+(PEEK-CHAR-NO-HANG
+           &optional peek-type in eof-error-p eof-value recursive-p) => char
+peek-type -- t or nil or character
+in -- t or nil or character input stream
+eof-error-p -- t or nil
+eof-value -- object
+recursive-p -- t or nil
+c -- character or nil or eof-value
+
+READ-LINE [Function]
+(READ-LINE &optional in eof-error-p eof-value recursive-p) => str
+in -- t or nil or character input stream
+eof-error-p -- t or nil
+eof-value -- object
+recursive-p -- t or nil
+str -- string or eof-value
+
+PRIN1 [Function]
+(PRIN1 obj &optional out) => obj
+obj -- object
+out -- t or nil or character output stream
+
+PRINC [Function]
+(PRINC obj &optional out) => obj
+obj -- object
+out -- t or nil or character output stream
+
+PRINT [Function]
+(PRINT obj &optional out) => obj
+obj -- object
+out -- t or nil or character output stream
+
+FORMAT [Function]
+(FORMAT dest ctrlstr &rest args) => ret
+dest -- t or nil or character output stream
+ctrlstr -- string
+args -- list
+ret -- nil or string
+;; Supported format directives are ~S, ~A, and ~%.
+
+*PRINT-CASE* [Variable]
+*PRINT-CASE* => bool
+bool -- t or nil
+
+*PRINT-CIRCLE* [Variable]
+*PRINT-CIRCLE* => bool
+bool -- t or nil
+
+*PRINT-ESCAPE* [Variable]
+*PRINT-ESCAPE* => bool
+bool -- t or nil
+
+WRITE-BYTE [Function]
+(WRITE-BYTE b out) => b
+b -- fixnum
+out -- binary output stream
+
+WRITE-CHAR [Function]
+(WRITE-CHAR c &optional out) => c
+c -- character
+out -- t or nil or character output stream
+
+WRITE-LINE [Function]
+(WRITE-LINE str &optional out &key start end) => str
+str -- string
+out -- t or nil or character output stream
+start -- fixnum
+end -- fixnum
+
+WRITE-STRING [Function]
+(WRITE-STRING str &optional out &key start end) => str
+str -- string
+out -- t or nil or character output stream
+start -- fixnum
+end -- fixnum
+
+TERPRI [Function]
+(TERPRI &optional out) => NIL
+out -- t or nil or character output stream
+
+=============================
+Compile,Load
+=============================
+COMPILE [Function]
+(COMPILE name &optional definition &key print) => name class-name
+name -- symbol
+definition -- expr
+print t or nil
+class-name -- string
+
+COMPILE-FILE [Function]
+(COMPILE-FILE input-file
+         &key output-file
+              print
+              generate-class-file
+              input-file-encoding
+              output-file-encoding) => output-filename
+input-file -- string
+output-file -- string
+print -- t or nil
+generate-class-file -- t or nil
+input-file-encoding -- nil or string
+output-file-encoding -- nil or string
+
+*COMPILE-INPUT-DIR* [Variable]
+*COMPILE-INPUT-DIR* => dir
+dir -- nil or string
+
+*COMPILE-OUTPUT-DIR* [Variable]
+*COMPILE-OUTPUT-DIR* => dir
+dir -- nil or string
+
+*COMPILE-CLASS-DIR* [Variable]
+*COMPILE-CLASS-DIR* => dir
+dir -- nil or string
+
+EVAL-WHEN [Special Form]
+(EVAL-WHEN timelist {form}*)
+timelist -- list of symbol (whose value is EVAL, LOAD, or COMPILE)
+
+DECLARE [Special Form]
+(DECLARE {form}*)
+
+SPECIAL [Special Form available in the DECLARE form]
+(SPECIAL {var}*)
+var -- symbol
+
+FIXNUM [Special Form available in the DECLARE form]
+(FIXNUM {var | (func {argtype}*)}*)
+var -- symbol
+func -- symbol
+argtype -- symbol
+
+FLONUM [Special Form available in the DECLARE form]
+(FLONUM {var | (func {argtype}*)}*)
+var -- symbol
+func -- symbol
+argtype -- symbol
+
+CHARACTER [Special Form available in the DECLARE form]
+(CHARACTER {var | (func {argtype}*)}*)
+var -- symbol
+func -- symbol
+argtype -- symbol
+
+LOAD [Function]
+(LOAD input-file &key input-file-encoding) => T
+input-file -- string
+input-file-encoding -- nil or string
+
+*LOAD-DIR* [Variable]
+*LOAD-DIR* => dir
+dir -- nil or string
+
+=============================
+Others
+=============================
+TIME [Special Form]
+(TIME form)
+
+ALARMCLOCK [Function]
+(ALARMCLOCK timername delay) => T
+timername -- symbol
+delay -- fixnum
+
+ALARMCLOCK [Variable]
+ALARMCLOCK => func
+func -- nil or function
+
