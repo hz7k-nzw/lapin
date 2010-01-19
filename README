@@ -2,8 +2,8 @@ LAPIN
 
 LAPIN is a dialect of lisp written in Java, which supports both interpreter
 and compiler. Some features (data types, functions, ...) given to LAPIN come
-from MACLISP, for one of the main goal of this project is to run the RABBIT
-compiler under this lisp system.
+from MACLISP, for one of the main goal of this project is to make the RABBIT
+compiler run under this lisp system.
 
 Author:
  Kenji Nozawa (hz7k-nzw@asahi-net.or.jp)
