@@ -52,6 +52,6 @@ public abstract class CompiledExpr extends Subr {
         return new LambdaList(toSexp(s, env), env);
     }
     public String toString() {
-        return "COMPILED-EXPR:"+super.name();
+        return "COMPILED-EXPR:"+super.name()+":"+super.getClass().getName();
     }
 }
