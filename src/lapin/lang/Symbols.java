@@ -104,6 +104,9 @@ public final class Symbols {
     /** Interned symbol whose pname is "EQUAL". */
     static public final Symbol EQUAL
         = Package.LISP.intern("EQUAL");
+    /** Interned symbol whose pname is "ERROR". */
+    static public final Symbol ERROR
+        = Package.LISP.intern("ERROR");
     /** Interned symbol whose pname is "EVAL". */
     static public final Symbol EVAL
         = Package.LISP.intern("EVAL");

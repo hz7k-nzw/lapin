@@ -1219,8 +1219,54 @@ final class InstsBuilder {
             throw new ProgramException
                 ("args.length must be 1: ~S.", Lists.list(cdr));
         Context ctx = Context.get(env);
-        Symbol tag = ctx.getBlockTag(Data.symbol(Lists.car(cdr)));
-        ctx.addInst(Lists.list(Insts.GOTO, tag));
+        Object exp = Lists.car(cdr);
+        if (Data.isSymbol(exp)) {
+            // simple-GO: (go <tag>)
+            Symbol tag = ctx.getBlockTag(Data.symbol(exp));
+            ctx.addInst(Lists.list(Insts.GOTO, tag));
+        }
+        else {
+            // computed-GO: (go <form>)
+            // (let ((tmp-var <form>))
+            //  (cond
+            //   ((eq tmp-var 'tag1)
+            //    (go tag1))
+            //   ...
+            //   ((eq tmp-var 'tagN)
+            //    (go tagN))
+            //   (t
+            //    (error))))
+            Object tmpVar = ctx.pushTempVar(Object.class);
+            Object tags = ctx.getBlockTags();
+            Object body = genComputedGoBody
+                (Data.symbol(Lists.car(tmpVar)), tags, env);
+            if (Logger.tracelevelp(env)) {
+                Logger.trace("[comp:computed-go] form=~S",
+                             Lists.list(exp), env);
+                Logger.trace("[comp:computed-go] body=~S",
+                             Lists.list(body), env);
+            }
+            compileFormWithExpectedType(exp, Object.class, false, env);
+            ctx.addInst(Lists.list(Insts.STORE, tmpVar));
+            compileFormWithExpectedType(body, null, false, env);
+            ctx.popVar();
+        }
+    }
+    static private Object genComputedGoBody(Symbol var, Object tags, Env env) {
+        if (tags == Symbols.NIL) {
+            // (error)
+            String msg = "No tag is currently visible";
+            Symbol errtype = Symbols.UNSEEN_GO_TAG;
+            return Lists.list(Symbols.ERROR, Forms.quote(msg),
+                              var, Forms.quote(errtype));
+        }
+        else {
+            Object tag = Lists.car(tags);
+            Object test = Lists.list(Symbols.EQ, var, Forms.quote(tag));
+            Object con = Lists.list(Symbols.GO, tag);
+            Object alt = genComputedGoBody(var, Lists.cdr(tags), env);
+            return Lists.list(Symbols.IF, test, con, alt);
+        }
     }
     static private void compileThrow(Object cdr, Env env) {
         if (Lists.length(cdr) != 2)

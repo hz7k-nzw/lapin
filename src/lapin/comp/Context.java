@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 
 /** context object used in the compilation process. */
@@ -456,6 +457,14 @@ final class Context implements lapin.comp.ClassInfo {
             throw new ProgramException
                 ("tag not exists: ~S.", Lists.list(tag));
         }
+        Object getBlockTags() {
+            HashSet tags = new HashSet();
+            for (Object l = block; !Lists.isEnd(l); l = Lists.cdr(l)) {
+                BlockInfo bi = (BlockInfo) Lists.car(l);
+                tags.addAll(bi.tagMap.keySet());
+            }
+            return Lists.toList(tags.toArray());
+        }
         Symbol getBlockStartTag() {
             BlockInfo bi = peekBlock();
             return bi.startTag;
@@ -781,6 +790,10 @@ final class Context implements lapin.comp.ClassInfo {
     Symbol getBlockTag(Symbol tag) {
         MethodInfo mi = peekMethod();
         return mi.getBlockTag(tag);
+    }
+    Object getBlockTags() {
+        MethodInfo mi = peekMethod();
+        return mi.getBlockTags();
     }
     Symbol getBlockStartTag() {
         MethodInfo mi = peekMethod();

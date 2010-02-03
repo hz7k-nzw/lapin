@@ -396,11 +396,11 @@ final class FormConverter {
             throw new ProgramException
                 ("args.length must be 1: ~S.",
                  Lists.list(cdr));
-        if (!Data.isSymbol(Lists.car(cdr)))
-            throw new ProgramException
-                ("GO tag must be symbol: ~S.",
-                 Lists.list(Lists.car(cdr)));
-        return Lists.cons(Symbols.GO, cdr);
+        Object form = Lists.car(cdr);
+        if (Data.isSymbol(form))
+            return Lists.list(Symbols.GO, form);
+        else
+            return Lists.list(Symbols.GO, convertForm(form, env));
     }
     static private Object convertReturn(Object cdr, Env env) {
         if (Lists.length(cdr) != 1)
