@@ -56,6 +56,9 @@
 ;;(define-compiler-macro cadr (&whole form &rest args)
 ;;  `(car (cdr ,@args)))
 
+(define-compiler-macro comment (&whole form &rest args)
+  `'comment)
+
 ;;; Special handlers for compiler
 
 (defmacro conv (form) `(sys::convert-form ',form))
