@@ -1,5 +1,5 @@
 This is a list of functions, special forms, and other objects
-available in LAPIN. Many of the functions listed bellow can be
+available in LAPIN. Many of the functions listed below can be
 found in "The Pitmanual" (http://maclisp.info/pitmanual/index.html).
 
 
